@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .slider-container {
+            text-align: center;
+            margin: 2%;
+        }
+
+        .slider-image {
+            width: 100%;
+            height: 850px;
+            background-size: cover;
+            background-position: center;
+            margin-bottom: 10px;
+        }
+
+        .slider-dots {
+            margin-top: 10px;
+        }
+
+        .slider-dots span {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #888;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+
+        .slider-dots span.active {
+            background-color: #333;
+        }
+        .prev-btn{
+            background-color: aquamarine;
+        }
+        .next-btn{
+            background-color: aquamarine;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="slider-container">
+        <div class="slider-image"></div>
+        <button class="prev-btn">Предыдущее изображение</button>
+        <button class="next-btn">Следующее изображение</button>
+        <div class="slider-dots"></div>
+    </div>
+<script>
+    const images = ["img/1.jpg", "img/2.jpg", "img/3.jpg"]; // Пути к изображениям
+    let currentImageIndex = 0;
+
+    const sliderImage = document.querySelector('.slider-image');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const sliderDots = document.querySelector('.slider-dots');
+
+    function showImage(index) {
+        sliderImage.style.backgroundImage = `url(${images[index]})`;
+
+        const dots = document.querySelectorAll('.slider-dots span');
+        dots.forEach(dot => dot.classList.remove('active'));
+        dots[index].classList.add('active');
+    }
+
+    function prevImage() {
+        currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+        showImage(currentImageIndex);
+    }
+
+    function nextImage() {
+        currentImageIndex = (currentImageIndex + 1) % images.length;
+        showImage(currentImageIndex);
+    }
+
+    prevBtn.addEventListener('click', prevImage);
+    nextBtn.addEventListener('click', nextImage);
+
+    images.forEach((_, index) => {
+        const dot = document.createElement('span');
+        dot.addEventListener('click', () => showImage(index));
+        sliderDots.appendChild(dot);
+    });
+
+    showImage(currentImageIndex);
+
+</script>
+</body>
+</html>
